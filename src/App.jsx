@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Map from "./components/Map";
 
 function App() {
   const [data, setData] = useState(null);
@@ -10,25 +11,28 @@ function App() {
       .catch((error) => console.error(error));
   }, []);
 
+  console.log(data)
+
   return (
     <>
       <h1>IP Address Finder</h1>
-      <div>
-        {data === null ? (
+      {data === null ? (
           <p>Loading...</p>
-        ) : (
-          <table border={1}>
-            <tbody>
-              {Object.keys(data).map((key, index) => (
-                <tr key={index}>
-                  <td>{key}</td>
-                  <td>{data[key]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+        ) :
+        <div>
+            <table border={1}>
+              <tbody>
+                {Object.keys(data).map((key, index) => (
+                  <tr key={index}>
+                    <td>{key}</td>
+                    <td>{data[key]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          <Map lat={data.latitude} lng={data.longitude} />
+        </div>
+      }
     </>
   );
 }
